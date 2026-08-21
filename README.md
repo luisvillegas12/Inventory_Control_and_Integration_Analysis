@@ -23,6 +23,7 @@ Testing: Jest + Supertest
    cd backend
    cp .env.example .env
    npm install
+   
    npm run db:init      # applies src/db/schema.sql
    npm run dev           # nodemon, http://localhost:4000
    ```
@@ -222,8 +223,8 @@ The final launch approval authority should be a joint sign-off between the head 
 | Week | Priority Activities & Milestones | Testing / Certification | Dependencies |
 |---|---|---|---|
 | Week 4 | Fix blocker-class defects: mandatory idempotency key, mass-zero quarantine, stale-store alerting, handshake tracing + faster deactivation, order-status reconciliation after timeout. Select and certify the 20 pilot stores. Publish 11,420-product menu; send rejection report for the 580. | Re-run end-to-end test on all 20 pilot stores individually. Load/latency test on inventory + order APIs. | QuickMart dev availability for fixes; POS provider engagement for handshake tracing. |
-| Week 5 | Launch 20-store controlled pilot on the original commercial date. Run hypercare (Section 5.4). Daily defect triage. Begin reconciliation dashboards for inventory and menu. | Monitor KPIs (Section 7) against pilot-gate thresholds; joint war-room review of handshake root cause using new tracing data. | 20-store pilot go/no-go sign-off (Section 3.2); marketing campaign scoped to pilot stores only or delayed to match footprint. |
-| Week 6 | Evaluate 20-store results against Gate 1 criteria (Section 5.3). If met, begin phased ramp toward 100 stores; if not, extend pilot and remediate. Formalize hypercare-to-steady-state handover plan for post-launch weeks. | Gate review with Launch Governance Board; regression test of all Week-4 fixes at higher volume. | Clean gate-1 KPI results; QuickMart's remediation of remaining menu rejections. |
+| Week 5 | Launch 20-store controlled pilot on the original commercial date. Run hypercare. Daily defect triage. Begin reconciliation dashboards for inventory and menu. | Monitor KPIs against pilot-gate thresholds; joint war-room review of handshake root cause using new tracing data. | 20-store pilot go/no-go sign-off ; marketing campaign scoped to pilot stores only or delayed to match footprint. |
+| Week 6 | Evaluate 20-store results against Gate 1 criteria. If met, begin phased ramp toward 100 stores; if not, extend pilot and remediate. Formalize hypercare-to-steady-state handover plan for post-launch weeks. | Gate review with Launch Governance Board; regression test of all Week-4 fixes at higher volume. | Clean gate-1 KPI results; QuickMart's remediation of remaining menu rejections. |
 
 ### 5.2 RACI Matrix
 
@@ -255,10 +256,10 @@ The final launch approval authority should be a joint sign-off between the head 
 | Audience | Core Message |
 |---|---|
 | QuickMart | We are launching on the agreed date with a 20-store controlled pilot, not all 100, because production data shows unresolved risks (inventory, handshake) that would put their stores and customer experience at risk if launched at full scale immediately. We commit to a clear path to 100 and then 500 stores, with dates driven by objective, jointly-visible KPI gates rather than a fixed calendar. |
-| Commercial / KAM | The pilot protects the commercial relationship and the launch date — the campaign proceeds — while avoiding a scenario where a systemic failure at 100 stores damages QuickMart's trust in the platform far more than a short, well-communicated phased ramp would. |
-| Operations | Their 20-store proposal is being adopted; hypercare staffing and escalation coverage (Section 5.4) is scoped to that footprint, with a defined trigger for scaling coverage at Gate 1 and Gate 2. |
+| Commercial / KAM | The pilot protects the commercial relationship and the launch date, while avoiding a scenario where a systemic failure at 100 stores damages QuickMart's trust in the platform far more than a short, well-communicated phased ramp would. |
+| Operations | Their 20-store proposal is being adopted; hypercare staffing and escalation coverage is scoped to that footprint, with a defined trigger for scaling coverage at Gate 1 and Gate 2. |
 | Product | The defect classes exposed (idempotency, reconciliation, alerting, order-status ambiguity) are prioritized as platform-hardening work with fixed owners and week-4 target dates; this should inform the roadmap beyond QuickMart. |
-| Engineering | The specific blocker list (Section 2.2 / Section 4) with owners and target dates; engineering leads confirm feasibility of the Week-4 fixes before the pilot go/no-go. |
+| Engineering | The specific blocker list with owners and target dates; engineering leads confirm feasibility of the Week-4 fixes before the pilot go/no-go. |
 | Marketing | The campaign runs on the original date, scoped to the 20-store pilot footprint (or messaged as a phased rollout) so promotional demand does not outstrip the stores actually live and monitored. |
 | POS provider (3rd party) | Specific, evidenced asks: connectivity/uptime logs for the 12 stores with handshake dropouts, an SLA commitment on response time (<15s incidents), and standardized error codes; framed as a joint investigation, not a one-sided blame assignment. |
 
@@ -266,18 +267,18 @@ The final launch approval authority should be a joint sign-off between the head 
 
 - What can be launched: 20 stores, on the original date, with the full order/menu/inventory flow live.
 - What should not be launched (yet): the remaining 80 of the first 100 stores, pending Gate 1 KPI results.
-- Which risks remain open: handshake root cause, full reconciliation automation, POS latency/error-code standardization — all tracked publicly in the weekly progress meeting.
+- Which risks remain open: handshake root cause, full reconciliation automation, POS latency/error-code standardization, all tracked publicly in the weekly progress meeting.
 - Which risks are being temporarily accepted: the 580 rejected menu products (4.8%), pending QuickMart's correction.
 - What QuickMart must complete: correct/resubmit rejected products, support handshake root-cause investigation with store-side data, enforce idempotency keys on inventory resends.
 - What support is required from the POS provider: connectivity logs, response-time SLA, standardized error codes, participation in the joint war-room review.
-- What internal teams must complete: the Section 4 blocker fixes (idempotency, quarantine, alerting, tracing, status reconciliation) before pilot go-live.
-- What conditions must be met before expansion: the Gate 1 and Gate 2 criteria in Section 5.3, reviewed transparently with QuickMart and Commercial.
-- How incidents and progress will be communicated: Sev 1/2 same-day summaries, a living KPI dashboard, and the existing weekly QuickMart/Commercial/Operations/Integration meeting used as the standing forum — not a new channel.
+- What internal teams must complete: the blocker risks fixes (idempotency, quarantine, alerting, tracing, status reconciliation) before pilot go-live.
+- What conditions must be met before expansion: the Gate 1 and Gate 2 criteria reviewed transparently with QuickMart and Commercial.
+- How incidents and progress will be communicated: Summaries, a living KPI dashboard, and the existing weekly QuickMart/Commercial/Operations/Integration meeting used as the standing forum, not a new channel.
 - How the commercial relationship is protected without hiding technical risk: by giving QuickMart and Commercial a concrete, dated path to 100 and 500 stores (not a vague delay) and by showing the pilot as risk management that protects their brand and customer experience, not as a lack of confidence in the partnership.
 
 ### 6.3 If Commercial Keeps Insisting on 100 Stores
 
-Acknowledge the commercial pressure directly rather than dismissing it, and reframe the choice: launching 100 stores with known, repeatable defects risks a much larger and more visible failure — mass technical cancellations or dark stores across the full cohort, in front of the marketing campaign's spotlight — which would damage the QuickMart relationship far more than a transparent, dated pilot-to-scale plan. Offer the Launch Governance Board structure as the forum to make that trade-off explicit and jointly owned, and present the Gate 1 timeline (roughly one to two weeks behind a 100-store start) as a small, bounded delay in exchange for a materially lower risk of a public incident. If Commercial still wants to formally override, that override request goes to the same Governance Board and is documented — it is not something Integration should quietly absorb or execute around.
+Acknowledge the commercial pressure directly rather than dismissing it, and reframe the choice: launching 100 stores with known, repeatable defects risks a much larger and more visible failure, mass technical cancellations or dark stores across the full cohort, in front of the marketing campaign's spotlight, which would damage the QuickMart relationship far more than a transparent, dated pilot-to-scale plan. Offer the Launch Governance Board structure as the forum to make that trade-off explicit and jointly owned, and present the Gate 1 timeline (roughly one to two weeks behind a 100-store start) as a small, bounded delay in exchange for a materially lower risk of a public incident. If Commercial still wants to formally override, the request goes to the same final authority and is documented; it is not something Integration should quietly absorb or execute around.
 
 ## 7. KPIs and Success Criteria
 
