@@ -1,6 +1,6 @@
 # Quick Mart Business Case
-1. [Part A - Business Case Resolutions](#quickmart-business-case-part-A)
-2. [Part B - Control Tower Setup](#quickmart-inventory-control-part-B)
+1. [Part A - Business Case Resolutions](#quickmart-business-case---part-A)
+2. [Part B - Control Tower Setup](#quickmart-inventory-control---part-B)
 
 
 
